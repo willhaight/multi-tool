@@ -5,7 +5,7 @@
     <div>
       <router-link :to="{ name: 'Chat' }">
         Chat
-        <span class="notes">{{ notifications }}</span>
+        <span v-if="notifications" class="notes">{{ notifications }}</span>
       </router-link>
     </div>
     <p>{{ username }}</p>

@@ -18,6 +18,8 @@
     <div class="home-content">
       <h4>To sign up please reach out to Will</h4>
       <h5>Updates</h5>
+      <h6>Patch 1.6</h6>
+      <p>Made better notification styling and functioning.</p>
       <h6>Patch 1.5</h6>
       <p>Notification fixes</p>
       <h6>Patch 1.4</h6>
