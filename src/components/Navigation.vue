@@ -4,9 +4,9 @@
     <router-link :to="{ name: 'Task Manager' }">Task Manager</router-link>
     <div>
       <router-link :to="{ name: 'Chat' }">
-        Chat {{ notifications }}
+        Chat
+        <span class="notes">{{ notifications }}</span>
       </router-link>
-      <button @click="clearChat" class="clear-notifications">Clear</button>
     </div>
     <p>{{ username }}</p>
   </div>
@@ -35,7 +35,11 @@ export default {
     });
 
     onSnapshot(collection(db, "chats"), (snap) => {
-      notifications.value = notifications.value + 1 - props.counterNotify;
+      if (props.counterNotify) {
+        notifications.value = notifications.value + 1 - props.counterNotify;
+      } else {
+        notifications.value++;
+      }
       if (firstLoad == true) {
         notifications.value = 0;
         firstLoad = false;
@@ -43,12 +47,8 @@ export default {
       emit.emit("adjust");
     });
 
-    const clearChat = () => {
-      notifications.value = 0;
-    };
-
     //returns
-    return { username, notifications, clearChat };
+    return { username, notifications };
   },
 };
 </script>
@@ -76,9 +76,16 @@ export default {
 }
 .clear-notifications {
   padding: 0;
-  margin: 0;
   color: black;
   min-width: 5em;
+}
+.notes {
+  color: black;
+  background-color: orange;
+  border-radius: 3em;
+  text-align: center;
+  padding-left: 2px;
+  padding-right: 1px;
 }
 /* colors are as follows
 red #91001F
