@@ -3,7 +3,6 @@
     <router-link :to="{ name: 'Home' }">Home</router-link>
     <router-link :to="{ name: 'Task Manager' }">Task Manager</router-link>
     <router-link :to="{ name: 'Chat' }">Chat</router-link>
-    <router-link :to="{ name: 'Timer' }">Timer</router-link>
     <p>{{ username }}</p>
   </div>
 </template>

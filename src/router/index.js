@@ -20,11 +20,6 @@ const routes = [
     path: '/chat',
     name: 'Chat',
     component: Chat
-  },
-  {
-    path: '/timer',
-    name: 'Timer',
-    component: Timer
   }
 ]
 
