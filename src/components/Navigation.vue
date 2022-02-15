@@ -2,25 +2,50 @@
   <div class="navigation">
     <router-link :to="{ name: 'Home' }">Home</router-link>
     <router-link :to="{ name: 'Task Manager' }">Task Manager</router-link>
-    <router-link :to="{ name: 'Chat' }">Chat</router-link>
+    <div>
+      <router-link :to="{ name: 'Chat' }">
+        Chat {{ notifications }}</router-link
+      >
+      <button @click="clearChat" class="clear-notifications">Clear</button>
+    </div>
     <p>{{ username }}</p>
   </div>
 </template>
 
 <script>
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../config";
+import { onSnapshot, collection } from "firebase/firestore";
+import { auth, db } from "../config";
 import { ref } from "@vue/reactivity";
 export default {
   components: {},
   setup() {
+    //vars
     let username = ref("");
+    let notifications = ref(0);
+    let firstLoad = true;
+
+    //functions
     onAuthStateChanged(auth, (acc) => {
       if (acc) {
         username.value = acc.displayName;
       }
     });
-    return { username };
+
+    onSnapshot(collection(db, "chats"), (snap) => {
+      notifications.value++;
+      if (firstLoad == true) {
+        notifications.value = 0;
+        firstLoad = false;
+      }
+    });
+
+    const clearChat = () => {
+      notifications.value = 0;
+    };
+
+    //returns
+    return { username, notifications, clearChat };
   },
 };
 </script>
@@ -45,6 +70,12 @@ export default {
   text-decoration: none;
   color: rgb(230, 230, 230);
   margin-left: 8vw;
+}
+.clear-notifications {
+  padding: 0;
+  margin: 0;
+  color: black;
+  min-width: 5em;
 }
 /* colors are as follows
 red #91001F

@@ -18,6 +18,8 @@
     <div class="home-content">
       <h4>To sign up please reach out to Will</h4>
       <h5>Updates</h5>
+      <h6>Patch 1.4</h6>
+      <p>Added notifications in the Navigation for the chat</p>
       <h6>Patch 1.3</h6>
       <p>
         Task Manager Edited to be more user friendly and easier to read tasks.

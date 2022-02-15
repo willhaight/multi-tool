@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import TaskManager from '../views/TaskManager.vue'
 import Chat from '../views/Chat.vue'
-import Timer from '../views/Timer.vue'
 
 const routes = [
   {
