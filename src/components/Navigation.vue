@@ -4,8 +4,8 @@
     <router-link :to="{ name: 'Task Manager' }">Task Manager</router-link>
     <div>
       <router-link :to="{ name: 'Chat' }">
-        Chat {{ notifications }}</router-link
-      >
+        Chat {{ notifications }}
+      </router-link>
       <button @click="clearChat" class="clear-notifications">Clear</button>
     </div>
     <p>{{ username }}</p>
@@ -19,12 +19,14 @@ import { auth, db } from "../config";
 import { ref } from "@vue/reactivity";
 export default {
   components: {},
-  setup() {
+  props: ["counterNotify"],
+  emits: ["adjust"],
+  setup(props, emit) {
     //vars
     let username = ref("");
     let notifications = ref(0);
     let firstLoad = true;
-
+    console.log("notis", props.counterNotify);
     //functions
     onAuthStateChanged(auth, (acc) => {
       if (acc) {
@@ -33,11 +35,12 @@ export default {
     });
 
     onSnapshot(collection(db, "chats"), (snap) => {
-      notifications.value++;
+      notifications.value = notifications.value + 1 - props.counterNotify;
       if (firstLoad == true) {
         notifications.value = 0;
         firstLoad = false;
       }
+      emit.emit("adjust");
     });
 
     const clearChat = () => {

@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    <Nav />
+    <Nav :counterNotify="notifyCancel" @adjust="fix" />
     <div class="header">
       <h1>Chatroom</h1>
     </div>
@@ -42,6 +42,7 @@ export default {
   setup() {
     //vars
     let message = ref("");
+    let notifyCancel = ref(0);
     let user = ref("");
     let messageColl = ref([]);
     let router = useRouter();
@@ -74,12 +75,18 @@ export default {
         message: user.value + ": " + message.value,
         time: serverTimestamp(),
       };
+      notifyCancel.value = 2;
       await addDoc(collection(db, "chats"), fullMessage);
       console.log(user.value, message.value);
       message.value = "";
     };
+
+    const fix = () => {
+      notifyCancel.value = 0;
+    };
+
     //returns
-    return { message, sendMessage, messageColl };
+    return { message, sendMessage, messageColl, fix, notifyCancel };
   },
 };
 </script>
