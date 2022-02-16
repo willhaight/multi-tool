@@ -46,6 +46,7 @@ export default {
     let user = ref("");
     let messageColl = ref([]);
     let router = useRouter();
+    let noteAdjust = 0;
     //functions
     onAuthStateChanged(auth, (acc) => {
       if (acc) {
@@ -75,14 +76,15 @@ export default {
         message: user.value + ": " + message.value,
         time: serverTimestamp(),
       };
-      notifyCancel.value = 2;
+      notifyCancel.value = 2 + noteAdjust;
       await addDoc(collection(db, "chats"), fullMessage);
       console.log(user.value, message.value);
       message.value = "";
     };
 
-    const fix = () => {
+    const fix = (noteAmount) => {
       notifyCancel.value = 0;
+      noteAdjust = noteAmount
     };
 
     //returns

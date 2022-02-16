@@ -26,7 +26,6 @@ export default {
     let username = ref("");
     let notifications = ref(0);
     let firstLoad = true;
-    console.log("notis", props.counterNotify);
     //functions
     onAuthStateChanged(auth, (acc) => {
       if (acc) {
@@ -44,7 +43,7 @@ export default {
         notifications.value = 0;
         firstLoad = false;
       }
-      emit.emit("adjust");
+      emit.emit("adjust", notifications.value);
     });
 
     //returns
